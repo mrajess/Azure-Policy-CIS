@@ -1,0 +1,45 @@
+{
+    "properties": {
+        "displayName": "9.5",
+        "description": "9.5 - Ensure that Register with Azure Active Directory is enabled on App Service",
+        "parameters": {
+            "policyEffect": {
+                "type": "String",
+                "metadata": {
+                    "displayName": "Effect",
+                    "description": "Enable or disable the execution of the policy"
+                },
+                "allowedValues": [
+                    "AuditIfNotExists",
+                    "Disabled"
+                ],
+                "defaultValue": "AuditIfNotExists"
+            }
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Web/sites"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "[parameters('policyEffect')]",
+                "details": {
+                    "type": "Microsoft.Web/sites",
+                    "name": "[field('name')]",
+                    "existenceCondition": {
+                        "allOf": [
+                            {
+                                "field": "Microsoft.Web/sites/config/managedServiceIdentityId",
+                                "exists": true
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

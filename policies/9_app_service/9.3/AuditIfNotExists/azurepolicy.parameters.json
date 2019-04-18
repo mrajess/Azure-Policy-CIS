@@ -1,0 +1,22 @@
+{
+    "effect": {
+        "type": "String",
+        "metadata": {
+            "displayName": "Effect",
+            "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+            "AuditIfNotExists",
+            "Disabled"
+        ],
+        "defaultValue": "AuditIfNotExists"
+    },
+    "minTLSVersion": {
+        "type": "string",
+        "metadata": {
+            "description": "Minimum version of TLS encryption to check web app settings against.",
+            "displayName": "Minimum TLS Version Required"
+        },
+        "defaultValue": "1.2"
+    }
+}
