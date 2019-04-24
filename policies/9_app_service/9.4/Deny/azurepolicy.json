@@ -1,0 +1,37 @@
+{
+    "properties": {
+        "displayName": "9.4 - Deny",
+        "description": "9.4 - Deny - Ensure the web app has 'Client Certificates (Incoming client certificates)' set to 'On'",
+        "parameters": {
+            "policyEffect": {
+                "type": "String",
+                "metadata": {
+                    "displayName": "Effect",
+                    "description": "Enable or disable the execution of the policy"
+                },
+                "allowedValues": [
+                    "Deny",
+                    "Disabled"
+                ],
+                "defaultValue": "Deny"
+            }
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Web/sites"
+                    },
+                    {
+                        "field": "Microsoft.Web/sites/clientCertEnabled",
+                        "equals": true
+                    }
+                ]
+            },
+            "then": {
+                "effect": "[parameters('policyEffect')]"
+            }
+        }
+    }
+}

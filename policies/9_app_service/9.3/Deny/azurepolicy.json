@@ -1,7 +1,7 @@
 {
     "properties": {
-        "displayName": "9.3 - AuditIfNotExists",
-        "description": "9.3 - AuditIfNotExists - Ensure web app is using the latest version of TLS encryption",
+        "displayName": "9.3 - Deny",
+        "description": "9.3 - Deny - Ensure web app is using the latest version of TLS encryption",
         "parameters": {
             "policyEffect": {
                 "type": "String",
@@ -10,10 +10,10 @@
                     "description": "Enable or disable the execution of the policy"
                 },
                 "allowedValues": [
-                    "AuditIfNotExists",
+                    "Deny",
                     "Disabled"
                 ],
-                "defaultValue": "AuditIfNotExists"
+                "defaultValue": "Deny"
             },
             "minTLSVersion": {
                 "type": "string",
@@ -30,23 +30,15 @@
                     {
                         "field": "type",
                         "equals": "Microsoft.Web/sites"
+                    },
+                    {
+                        "field": "Microsoft.Web/sites/config/minTlsVersion",
+                        "equals": "[parameters('minTLSVersion']"
                     }
                 ]
             },
             "then": {
-                "effect": "[parameters('policyEffect')]",
-                "details": {
-                    "type": "Microsoft.Web/sites",
-                    "name": "[field('name')]",
-                    "existenceCondition": {
-                        "allOf": [
-                            {
-                                "field": "Microsoft.Web/sites/config/minTlsVersion",
-                                "equals": "[parameters('minTLSVersion']"
-                            }                    
-                        ]
-                    }
-                }
+                "effect": "[parameters('policyEffect')]"
             }
         }
     }

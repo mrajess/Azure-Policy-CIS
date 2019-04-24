@@ -1,7 +1,7 @@
 {
     "properties": {
-        "displayName": "9.5",
-        "description": "9.5 - Ensure that Register with Azure Active Directory is enabled on App Service",
+        "displayName": "9.5 - AuditIfNotExists",
+        "description": "9.5 - AuditIfNotExists - Ensure that Register with Azure Active Directory is enabled on App Service",
         "parameters": {
             "policyEffect": {
                 "type": "String",

@@ -1,7 +1,7 @@
 {
     "properties": {
-        "displayName": "9.1",
-        "description": "9.1 - Ensure App Service Authentication is set on Azure App Service",
+        "displayName": "9.1 - AuditIfNotExists",
+        "description": "9.1 - AuditIfNotExists - Ensure App Service Authentication is set on Azure App Service",
         "parameters": {
             "policyEffect": {
                 "type": "String",

@@ -1,7 +1,7 @@
 {
     "properties": {
-        "displayName": "9.4",
-        "description": "9.4 - Ensure the web app has 'Client Certificates (Incoming client certificates)' set to 'On'",
+        "displayName": "9.4 - AuditIfNotExists",
+        "description": "9.4 - AuditIfNotExists - Ensure the web app has 'Client Certificates (Incoming client certificates)' set to 'On'",
         "parameters": {
             "policyEffect": {
                 "type": "String",

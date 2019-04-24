@@ -1,0 +1,37 @@
+{
+    "properties": {
+        "displayName": "9.2 - Deny",
+        "description": "9.2 - Deny - Ensure web app redirects all HTTP traffic to HTTPS in Azure App Service",
+        "parameters": {
+            "policyEffect": {
+                "type": "String",
+                "metadata": {
+                  "displayName": "Effect",
+                  "description": "Enable or disable the execution of the policy"
+                },
+                "allowedValues": [
+                  "Deny",
+                  "Disabled"
+                ],
+                "defaultValue": "Deny"
+              }
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Web/sites"
+                    },
+                    {
+                        "field": "Microsoft.Web/sites/httpsOnly",
+                        "equals": true
+                    }        
+                ]
+            },
+            "then": {
+                "effect": "[parameters('policyEffect')]"
+            }
+        }
+    }
+}

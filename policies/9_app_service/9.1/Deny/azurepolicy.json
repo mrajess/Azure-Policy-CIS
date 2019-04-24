@@ -1,0 +1,37 @@
+{
+    "properties": {
+        "displayName": "9.1 - Deny",
+        "description": "9.1 - Deny - Ensure App Service Authentication is set on Azure App Service",
+        "parameters": {
+            "policyEffect": {
+                "type": "String",
+                "metadata": {
+                  "displayName": "Effect",
+                  "description": "Enable or disable the execution of the policy"
+                },
+                "allowedValues": [
+                  "Deny",
+                  "Disabled"
+                ],
+                "defaultValue": "Deny"
+              }
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Web/sites"
+                    },
+                    {
+                        "field": "Microsoft.Web/sites/config/siteAuthEnabled",
+                        "equals": true
+                    }    
+                ]
+            },
+            "then": {
+                "effect": "[parameters('policyEffect')]"
+            }
+        }
+    }
+}

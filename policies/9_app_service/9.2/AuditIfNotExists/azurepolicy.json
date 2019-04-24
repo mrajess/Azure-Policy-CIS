@@ -1,7 +1,7 @@
 {
     "properties": {
-        "displayName": "9.2",
-        "description": "9.2 - Ensure web app redirects all HTTP traffic to HTTPS in Azure App Service",
+        "displayName": "9.2 - AuditIfNotExists",
+        "description": "9.2 - AuditIfNotExists - Ensure web app redirects all HTTP traffic to HTTPS in Azure App Service",
         "parameters": {
             "policyEffect": {
                 "type": "String",
