@@ -16,31 +16,35 @@
                     "description": "Enable or disable the execution of the policy"
                 },
                 "allowedValues": [
-                    "Audit",
+                    "AuditIfNotExists",
                     "Disabled"
                 ],
-                "defaultValue": "Audit"
+                "defaultValue": "AuditIfNotExists"
             }
         },
         "policyRule": {
             "if": {
-                "allOf": [
-                    {
-                        "field": "type",
-                        "equals": "Microsoft.Resources/subscriptions"
-                    },
-                    {
-                        "field": "Microsoft.Authorization/policyAssignments/policyDefinitionId",
-                        "equals": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8"
-                    },
-                    {
-                        "value": "[contains(toLower(string(field('Microsoft.Authorization/policyAssignments/parameters'))),'\"disabled\"')]",
-                        "equals": true
-                    }
-                ]
+                "field": "type",
+                "equals": "Microsoft.Resources/subscriptions"
             },
             "then": {
-                "effect": "[parameters('effect')]"
+                "effect": "[parameters('effect')]",
+                "details": {
+                    "type": "Microsoft.Authorization/policyAssignments",
+                    "existenceScope": "subscription",
+                    "existenceCondition": {
+                        "allOf": [
+                            {
+                                "field": "Microsoft.Authorization/policyAssignments/policyDefinitionId",
+                                "equals": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8"
+                            },
+                            {
+                                "value": "[contains(toLower(string(field('Microsoft.Authorization/policyAssignments/parameters'))),'\"disabled\"')]",
+                                "equals": true
+                            }
+                        ]
+                    }
+                }
             }
         }
     },
