@@ -1,6 +1,6 @@
 {
     "properties": {
-        "displayName": "Ensure that Vulnerability Assessment (VA) is enabled on a SQL server by setting a Storage Account - SQL Server",
+        "displayName": "Ensure that Vulnerability Assessment (VA) is enabled on a SQL server by setting a Storage Account - SQL Managed Instance",
         "policyType": "BuiltIn",
         "mode": "Indexed",
         "description": "By default Azure Defender for SQL is not enabled for a SQL server. Enabling Azure Defender for SQL does not enable VA scanning by setting Storage Account automatically.",
@@ -24,30 +24,22 @@
         },
         "policyRule": {
             "if": {
-                "allOf": [
-                    {
-                        "field": "type",
-                        "equals": "Microsoft.Sql/servers"
-                    },
-                    {
-                        "field": "kind",
-                        "notContains": "analytics"
-                    }
-                ]
+                "field": "type",
+                "equals": "Microsoft.Sql/managedInstances"
             },
             "then": {
                 "effect": "[parameters('effect')]",
                 "details": {
-                    "type": "Microsoft.Sql/servers/vulnerabilityAssessments",
+                    "type": "Microsoft.Sql/managedInstances/vulnerabilityAssessments",
                     "name": "default",
                     "existenceCondition": {
                         "allOf": [
                             {
-                                "field": "Microsoft.Sql/servers/vulnerabilityAssessments/recurringScans.isEnabled",
+                                "field": "Microsoft.Sql/managedInstances/vulnerabilityAssessments/recurringScans.isEnabled",
                                 "equals": "True"
                             },
                             {
-                                "field": "Microsoft.Sql/servers/vulnerabilityAssessments/storageContainerPath",
+                                "field": "Microsoft.Sql/managedInstances/vulnerabilityAssessments/storageContainerPath",
                                 "like": "*"
                             }
                         ]
@@ -56,6 +48,6 @@
             }
         }
     },
-    "id": "/providers/Microsoft.Authorization/policyDefinitions/27e7baf2-383e-52e1-a116-1ee17193ad33",
-    "name": "27e7baf2-383e-52e1-a116-1ee17193ad33"
+    "id": "/providers/Microsoft.Authorization/policyDefinitions/8a68eb13-3eb2-5bb0-abdf-6adedd0fcf73",
+    "name": "8a68eb13-3eb2-5bb0-abdf-6adedd0fcf73"
 }
