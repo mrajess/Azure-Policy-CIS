@@ -49,6 +49,14 @@
                             {
                                 "field": "Microsoft.Sql/servers/vulnerabilityAssessments/storageContainerPath",
                                 "like": "*"
+                            },
+                            {
+                                "field": "Microsoft.Sql/servers/vulnerabilityAssessments/recurringScans.emailSubscriptionAdmins",
+                                "equals": "True"
+                            },
+                            {
+                                "field": "Microsoft.Sql/servers/vulnerabilityAssessments/recurringScans.emails",
+                                "like": "*"
                             }
                         ]
                     }
