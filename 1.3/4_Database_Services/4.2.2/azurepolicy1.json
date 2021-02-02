@@ -1,0 +1,53 @@
+{
+    "properties": {
+        "displayName": "Ensure that Vulnerability Assessment (VA) is enabled on a SQL server by setting a Storage Account",
+        "policyType": "BuiltIn",
+        "mode": "All",
+        "description": "Deploys the diagnostic settings for Storage Table Services to stream to a regional Log Analytics workspace when any Storage Account which is missing this diagnostic settings is created or updated.",
+        "metadata": {
+            "version": "1.0.0",
+            "category": "Monitoring"
+        },
+        "parameters": {
+            "effect": {
+                "type": "String",
+                "metadata": {
+                    "displayName": "Effect",
+                    "description": "Enable or disable the execution of the policy"
+                },
+                "allowedValues": [
+                    "AuditIfNotExists",
+                    "Disabled"
+                ],
+                "defaultValue": "DeployIfNotExists"
+            }
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Sql/servers"
+                    },
+                    {
+                        "field": "kind",
+                        "notContains": "analytics"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "[parameters('effect')]",
+                "details": {
+                    "type": "Microsoft.Sql/servers/vulnerabilityAssessments",
+                    "name": "default",
+                    "existenceCondition": {
+                        "field": "Microsoft.Sql/servers/vulnerabilityAssessments/recurringScans.isEnabled",
+                        "equals": "True"
+                    }
+                }
+            }
+        }
+    },
+    "id": "/providers/Microsoft.Authorization/policyDefinitions/27e7baf2-383e-52e1-a116-1ee17193ad33",
+    "name": "27e7baf2-383e-52e1-a116-1ee17193ad33"
+}

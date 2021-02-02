@@ -1,0 +1,77 @@
+{
+    "properties": {
+        "displayName": "Ensure that Windows Defender ATP (WDATP) integration with Security Center is selected",
+        "description": "This setting enables Windows Defender ATP (WDATP) integration with Security Center.",
+        "policyType": "BuiltIn",
+        "mode": "All",
+        "metadata": {
+            "version": "1.0.0",
+            "category": "Security"
+        },
+        "parameters": {
+            "effect": {
+                "type": "String",
+                "metadata": {
+                    "displayName": "Effect",
+                    "description": "Enable or disable the execution of the policy"
+                },
+                "allowedValues": [
+                    "DeployIfNotExists",
+                    "AuditIfNotExists",
+                    "Disabled"
+                ],
+                "defaultValue": "AuditIfNotExists"
+            }
+        },
+        "policyRule": {
+            "if": {
+                "field": "type",
+                "equals": "Microsoft.Resources/subscriptions"
+            },
+            "then": {
+                "effect": "[parameters('effect')]",
+                "details": {
+                    "type": "Microsoft.Security/settings",
+                    "deploymentScope": "subscription",
+                    "existenceScope": "subscription",
+                    "name": "WDATP",
+                    "roleDefinitionIds": [
+                        "/providers/Microsoft.Authorization/roleDefinitions/fb1c8493-542b-48eb-b624-b4c8fea62acd"
+                    ],
+                    "existenceCondition": {
+                        "allOf": [
+                            {
+                                "field": "Microsoft.Security/settings/DataExportSettings.enabled",
+                                "equals": true
+                            }
+                        ]
+                    },
+                    "deployment": {
+                        "location": "eastus",
+                        "properties": {
+                            "mode": "incremental",
+                            "parameters": {},
+                            "template": {
+                                "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+                                "contentVersion": "1.0.0.0",
+                                "resources": [
+                                    {
+                                        "name": "WDATP",
+                                        "type": "Microsoft.Security/settings",
+                                        "apiVersion": "2019-01-01",
+                                        "kind": "DataExportSettings",
+                                        "properties": {
+                                            "enabled": true
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "id": "/providers/Microsoft.Authorization/policyDefinitions/b628e2c1-e47c-5317-8e4c-52e608abcd6e",
+    "name": "b628e2c1-e47c-5317-8e4c-52e608abcd6e"
+}

@@ -1,0 +1,45 @@
+{
+    "properties": {
+        "displayName": "Ensure any of the ASC Default policy setting is not set to Disabled",
+        "description": "Ensures that the default ASC Policy is assigned.",
+        "policyType": "BuiltIn",
+        "mode": "All",
+        "metadata": {
+            "version": "1.0.0",
+            "category": "Security"
+        },
+        "parameters": {
+            "effect": {
+                "type": "String",
+                "metadata": {
+                    "displayName": "Effect",
+                    "description": "Enable or disable the execution of the policy"
+                },
+                "allowedValues": [
+                    "AuditIfNotExists",
+                    "Disabled"
+                ],
+                "defaultValue": "AuditIfNotExists"
+            }
+        },
+        "policyRule": {
+            "if": {
+                "field": "type",
+                "equals": "Microsoft.Resources/subscriptions"
+            },
+            "then": {
+                "effect": "[parameters('effect')]",
+                "details": {
+                    "type": "Microsoft.Authorization/policyAssignments",
+                    "existenceScope": "subscription",
+                    "existenceCondition": {
+                        "field": "Microsoft.Authorization/policyAssignments/policyDefinitionId",
+                        "equals": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8"
+                    }
+                }
+            }
+        }
+    },
+    "id": "/providers/Microsoft.Authorization/policyDefinitions/0631f0a4-585d-5dd2-bca7-a435b728172b",
+    "name": "0631f0a4-585d-5dd2-bca7-a435b728172b"
+}

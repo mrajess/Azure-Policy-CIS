@@ -1,0 +1,49 @@
+{
+    "properties": {
+        "displayName": "Ensure any of the ASC Default policy setting is not set to Disabled",
+        "description": "None of the settings offered by ASC Default policy should be set to effect Disabled.",
+        "policyType": "BuiltIn",
+        "mode": "All",
+        "metadata": {
+            "version": "1.0.0",
+            "category": "Security"
+        },
+        "parameters": {
+            "effect": {
+                "type": "String",
+                "metadata": {
+                    "displayName": "Effect",
+                    "description": "Enable or disable the execution of the policy"
+                },
+                "allowedValues": [
+                    "Audit",
+                    "Disabled"
+                ],
+                "defaultValue": "Audit"
+            }
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Authorization/policyAssignments"
+                    },
+                    {
+                        "field": "Microsoft.Authorization/policyAssignments/policyDefinitionId",
+                        "equals": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8"
+                    },
+                    {
+                        "value": "[contains(toLower(string(field('Microsoft.Authorization/policyAssignments/parameters'))),'\"disabled\"')]",
+                        "equals": true
+                    }
+                ]
+            },
+            "then": {
+                "effect": "[parameters('effect')]"
+            }
+        }
+    },
+    "id": "/providers/Microsoft.Authorization/policyDefinitions/59340a6c-3fc2-577c-b810-adf8db5bc438",
+    "name": "59340a6c-3fc2-577c-b810-adf8db5bc438"
+}
